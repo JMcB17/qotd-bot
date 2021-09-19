@@ -8,7 +8,10 @@ import discord
 from discord.ext import commands
 
 
-__version__ = '0.1.0b'
+__version__ = '1.0.0'
+
+
+# todo: allow users with role to edit options
 
 
 CONFIG_PATH = 'config.json'
