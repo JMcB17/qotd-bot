@@ -3,6 +3,7 @@
   "options": {
     "channel_id": 717557659049525328,
     "role_id": 767435065138741249,
-    "ping_id": 0
+    "ping_id": 0,
+    "regex": "qotd: ?.*"
   }
 }

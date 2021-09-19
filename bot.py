@@ -2,6 +2,8 @@
 
 
 import json
+import re
+
 import discord
 from discord.ext import commands
 
@@ -16,6 +18,8 @@ PIN_LIMIT = 50
 class QotdBot(commands.Bot):
     def __init__(self, options: dict, *args, **kwargs):
         self.options = options
+        self.qotd_regex = re.compile(self.options['regex'], re.IGNORECASE)
+
         super().__init__(*args, **kwargs)
 
     async def on_ready(self):
@@ -24,6 +28,7 @@ class QotdBot(commands.Bot):
     async def on_message(self, message: discord.Message):
         if (
             message.channel.id == self.options['channel_id']
+            and re.match(self.qotd_regex, message.content)
             and self.options['role_id'] in [role.id for role in message.author.roles]
         ):
             pins = await message.channel.pins()
@@ -41,10 +46,12 @@ class QotdBot(commands.Bot):
 
 
 def main():
+    print(f'Loading config from {CONFIG_PATH}..')
     with open(CONFIG_PATH) as config_file:
         config = json.load(config_file)
 
     qotd_bot = QotdBot(options=config['options'], command_prefix='!')
+    print('Starting...')
     qotd_bot.run(config['token'])
 
 
