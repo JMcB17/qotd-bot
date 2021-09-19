@@ -53,7 +53,7 @@ def main():
     with open(CONFIG_PATH) as config_file:
         config = json.load(config_file)
 
-    qotd_bot = QotdBot(options=config['options'], command_prefix='!')
+    qotd_bot = QotdBot(options=config['options'], command_prefix='qotd.')
     print('Starting...')
     qotd_bot.run(config['token'])
 
